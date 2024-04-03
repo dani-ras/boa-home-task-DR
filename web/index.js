@@ -6,6 +6,8 @@ import serveStatic from 'serve-static';
 import shopify from './shopify.js';
 import webhooks from './webhooks.js';
 
+import cart from './CartSaveForLater/routes.js'
+
 const PORT = parseInt(process.env.BACKEND_PORT || process.env.PORT, 10);
 
 const STATIC_PATH =
@@ -29,9 +31,11 @@ app.post(
 );
 
 // All endpoints after this point will require an active session
-app.use('/api/*', shopify.validateAuthenticatedSession());
+// app.use('/api/*', shopify.validateAuthenticatedSession());
 
 app.use(express.json());
+
+app.use("/api/cart", cart);
 
 app.use(serveStatic(STATIC_PATH, { index: false }));
 
